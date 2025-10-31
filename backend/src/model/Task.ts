@@ -1,11 +1,11 @@
 import "reflect-metadata"; 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Length, IsBoolean } from "class-validator";
-import { User } from "./User"; 
+import { users } from "./User"; 
 
 @Entity()
 export class Task {
-
+ 
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -20,6 +20,6 @@ export class Task {
     @IsBoolean()
     completed!: boolean;
 
-    @ManyToOne(() => User, (user: User) => user.tasks, { onDelete: "CASCADE" })
-    user!: User;
+    @ManyToOne(() => users, (user: users) => user.tasks, { onDelete: "CASCADE" })
+    user!: users;
 }

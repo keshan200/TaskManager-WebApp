@@ -3,7 +3,7 @@ import { Task } from "./Task";
 import { IsEmail, Length } from "class-validator";
 
 @Entity()
-export class User {
+export class users {
     @PrimaryGeneratedColumn()
     id!: number;
 
