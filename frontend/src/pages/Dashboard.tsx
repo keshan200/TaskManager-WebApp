@@ -32,15 +32,7 @@ export default function TaskDashboard() {
     }
   };
 
-  const handleToggleComplete = async (taskId: number) => {
-    try {
-      const updatedTask = await 
-      setTasks(tasks.map(t => (t.id === taskId ? updatedTask : t)));
-    } catch (error) {
-      console.error('Error toggling task:', error);
-      alert('Failed to toggle task completion');
-    }
-  };
+ 
 
   const handleDeleteTask = async (taskId: number) => {
     if (!confirm('Are you sure you want to delete this task?')) return;
@@ -116,6 +108,22 @@ const handleAddTask = async () => {
     alert("Failed to create task");
   }
 };
+
+
+const handleToggleComplete = async (taskId: number) => {
+    try {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+      
+    
+      const updatedTask = { ...task, completed: !task.completed };
+      
+      setTasks(tasks.map(t => (t.id === taskId ? updatedTask : t)));
+    } catch (error) {
+      console.error('Error toggling task:', error);
+      alert('Failed to toggle task completion');
+    }
+  };
 
 
 const filteredTasks = tasks
@@ -280,6 +288,9 @@ const filteredTasks = tasks
               <div className="col-span-5">
                 <span className="text-sm font-bold text-gray-700 uppercase tracking-wide">Description</span>
               </div>
+               <div className="col-span-2 text-center">
+                   <span className="text-sm font-bold text-gray-700 uppercase tracking-wide">Status</span>
+                </div>
               <div className="col-span-2">
                 <span className="text-sm font-bold text-gray-700 uppercase tracking-wide">Actions</span>
               </div>
@@ -314,6 +325,30 @@ const filteredTasks = tasks
                       {task.description || 'No description'}
                     </p>
                   </div>
+
+                    <div className="col-span-2 flex justify-center">
+                    <button
+                      onClick={() => handleToggleComplete(task.id)}
+                      className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 ${
+                        task.completed
+                          ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                          : 'bg-red-100 text-red-700 hover:bg-red-200'
+                      }`}
+                    >
+                      {task.completed ? (
+                        <>
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Completed</span>
+                        </>
+                      ) : (
+                        <>
+                          <Clock className="w-4 h-4" />
+                          <span>Pending</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
                   <div className="col-span-2">
                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <button 
