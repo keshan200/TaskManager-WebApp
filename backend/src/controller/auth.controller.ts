@@ -73,9 +73,21 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? "strict" : "lax",
-      maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+      maxAge: 3 * 24 * 60 * 60 * 1000, 
       path: "/api/auth/refresh-token",
     });
+
+    res.cookie("user", JSON.stringify({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+}), {
+  httpOnly: false, 
+  secure: isProd,
+  sameSite: isProd ? "strict" : "lax",
+  maxAge: 3 * 24 * 60 * 60 * 1000,
+   path: "/",
+});
 
     res.status(200).json({
       user: {

@@ -56,8 +56,6 @@ export const createTask = async (req: Request, res: Response, next: NextFunction
 
 
 
-
-
 export const deleteTask = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const taskId = Number(req.params.id);
